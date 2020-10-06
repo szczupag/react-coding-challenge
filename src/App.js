@@ -1,11 +1,11 @@
 import React from 'react';
+import SearchPanel from './components/SearchPanel';
 import s from './App.css';
-// import './App.css';
 
 const App = () => {
   return (
     <div className={s.wrapper}>
-      Hello world!!!!!!!!
+      <SearchPanel />
     </div>
   );
 };
