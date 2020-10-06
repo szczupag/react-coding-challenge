@@ -33,6 +33,9 @@ const requestQuery = async (items, q, page) => {
     },
   });
   const data = await response.json();
+  if (data.errors) {
+    throw(data.errors);
+  }
   const reducedItems = reduceItems(data.items);
   items.push(...reducedItems);
 
@@ -49,6 +52,7 @@ const useRepositorySearch = () => {
   const [value, setValue] = useState('');
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState([]);
+  const [errors, setErrors] = useState([]);
 
   const inputChangeHandler = (event) => {
     event.persist();
@@ -61,12 +65,13 @@ const useRepositorySearch = () => {
       setLoading(true);
       setResult([]);
       requestQuery([], value, 1)
-        .then(result => {
+        .then(setResult)
+        .catch(setErrors)
+        .then(() => {
           setLoading(false);
-          setResult(result);
           setPrevValue(value);
           setValue('');
-        });
+        })
     };
   }
 
@@ -74,6 +79,7 @@ const useRepositorySearch = () => {
     value,
     loading,
     result,
+    errors,
     inputChangeHandler,
     buttonClickHandler,
   }
