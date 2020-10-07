@@ -1,13 +1,27 @@
 import React from 'react';
+import s from './style.css';
 
 const TableHead = ({
-  columns
+  columns,
+  onClick,
+  sortColumn,
+  sortOrder,
 }) => (
-    <thead>
+    <thead className={s.tableHead}>
       <tr>
-        {columns.map(({ name, label }) => (
-          <th key={name}>{label}</th>
-        ))}
+        {columns.map(({ name, label }) => {
+          const columnClass = sortColumn === name ? sortOrder : '';
+          return (
+            <th
+              key={name}
+              onClick={() => onClick(name)}
+              className={s[columnClass]}
+            >
+              {label}
+              <div className={s.sortIcon}></div>
+            </th>
+          )
+        })}
       </tr>
     </thead>
   );

@@ -14,6 +14,8 @@ const SearchPanel = () => {
     buttonClickHandler,
   } = useRepositorySearch();
 
+  console.log('err', errors);
+
   return (
     <div>
       <Input
@@ -24,8 +26,8 @@ const SearchPanel = () => {
       <State
         loading={loading}
         errors={errors}
+        render={() => <Table result={result} />}
       />
-      <Table result={result} />
     </div>
   )
 };

@@ -24,9 +24,12 @@ const requestQuery = async (items, q, page) => {
     },
   });
   const data = await response.json();
-  if (data.errors) {
-    throw(data.errors);
+
+  if (!response.ok) {
+    console.log(response.ok)
+    throw(data.errors || data);
   }
+
 
   items.push(...data.items);
 
@@ -43,7 +46,7 @@ const useRepositorySearch = () => {
   const [value, setValue] = useState('');
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState([]);
-  const [errors, setErrors] = useState([]);
+  const [errors, setErrors] = useState(false);
 
   const inputChangeHandler = (event) => {
     event.persist();
@@ -55,9 +58,13 @@ const useRepositorySearch = () => {
     if (value !== pervValue) {
       setLoading(true);
       setResult([]);
+      setErrors(false);
       requestQuery([], value, 1)
         .then(setResult)
-        .catch(setErrors)
+        .catch((err) => {
+          console.log('err', err)
+          setErrors(true)
+        })
         .then(() => {
           setLoading(false);
           setPrevValue(value);
