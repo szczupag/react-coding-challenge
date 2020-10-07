@@ -1,7 +1,7 @@
 .tableHead {
   th {
     padding: 8px;
-    border: 1px solid #cfcfcf;
+    border: 1px solid rgb(157, 169, 176);
   }
 }
 
@@ -12,7 +12,7 @@
   height: 0; 
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
-  border-top: 10px solid #cfcfcf;
+  border-top: 10px solid rgb(157, 169, 176);
 }
 
 .sortDesc {

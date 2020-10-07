@@ -4,6 +4,7 @@ import State from '../State';
 import Table from '../Table';
 import useRepositorySearch from '../../hooks/useRepositorySearch';
 import useRepositoryResults from '../../hooks/useRepositoryResults';
+import s from './style.css';
 
 const SearchPanel = () => {
   const {
@@ -30,7 +31,7 @@ const SearchPanel = () => {
   } = useRepositoryResults({ q, result });
 
   return (
-    <div>
+    <div className={s.wrapper}>
       <Input
         value={value}
         onChange={inputChangeHandler}

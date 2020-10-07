@@ -8,6 +8,7 @@ const Selector = ({
   onSelectorChange,
 }) => (
     <div className={s.selector}>
+      <span>Rows per page:</span>
       {options.map(el => {
         const activeClass = rowsPerPage === el ? s.active : '';
         return (

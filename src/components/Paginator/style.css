@@ -1,10 +1,19 @@
 .paginator {
-  span {
+  display: flex;
+  margin-top: 16px;
+  div {
+    color: #fff;
     margin: 8px;
     cursor: pointer;
-  }
-}
+    width: 24px;
+    height: 24px;
+    background-color: rgb(157, 169, 176);
+    font-size: 12px;
+    line-height: 24px;
+    text-align: center;
 
-.active {
-  color: #3101f5;
+    &.active {
+      background-color: #3101f5;
+    }
+  }
 }

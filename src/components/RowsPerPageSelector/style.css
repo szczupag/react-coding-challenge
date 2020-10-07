@@ -1,10 +1,13 @@
 .selector {
+  margin-bottom: 16px;
+  font-size: 14px;
+
   span {
     margin: 8px;
     cursor: pointer;
+    color: rgb(157, 169, 176);
+    &.active {
+      color: #3101f5;
+    }    
   }
-}
-
-.active {
-  color: #3101f5;
 }

@@ -13,13 +13,13 @@ const Paginator = ({
       {pagesArray.map(page => {
         const indicatorClass = page === currentPage ? s.active : '';
         return (
-          <span
+          <div
             key={page}
             className={indicatorClass}
             onClick={() => onPageChange(page)}
           >
             {page}
-          </span>
+          </div>
         );
       })}
     </div>
