@@ -14,8 +14,6 @@ const SearchPanel = () => {
     buttonClickHandler,
   } = useRepositorySearch();
 
-  console.log('err', errors);
-
   return (
     <div>
       <Input

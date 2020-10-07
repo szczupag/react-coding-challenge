@@ -3,7 +3,7 @@ import s from './style.css';
 
 const TableHead = ({
   columns,
-  onClick,
+  onColumnClick,
   sortColumn,
   sortOrder,
 }) => (
@@ -14,7 +14,7 @@ const TableHead = ({
           return (
             <th
               key={name}
-              onClick={() => onClick(name)}
+              onClick={() => onColumnClick(name)}
               className={s[columnClass]}
             >
               {label}

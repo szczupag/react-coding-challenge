@@ -1,0 +1,10 @@
+.paginator {
+  span {
+    margin: 8px;
+    cursor: pointer;
+  }
+}
+
+.active {
+  color: #3101f5;
+}

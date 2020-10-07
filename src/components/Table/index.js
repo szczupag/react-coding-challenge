@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import TableHead from '../TableHead';
 import TableBody from '../TableBody';
+import RowsPerPageSelector from '../RowsPerPageSelector';
+import Paginator from '../Paginator';
 import s from './style.css';
 
 const reduceItems = (items) => {
@@ -25,13 +27,17 @@ const Table = ({
   const [data, setData] = useState([]);
   const [sortColumn, setSortColumn] = useState();
   const [sortDescending, setSortDescending] = useState(true);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPageNumber, setTotalPageNumber] = useState();
+  const [dataOnCurrentPage, setDataOnCurrentPage] = useState([]);
 
-  useEffect(() => {
+  const onResultChange = () => {
     const reducedItems = reduceItems(result);
     setData(reducedItems);
-  }, [result]);
+  };
 
-  useEffect(() => {
+  const onSortChange = () => {
     if (sortColumn) {
       const sortedData = [...data].sort((a, b) => {
         const result = (a[sortColumn] < b[sortColumn]) ? -1 : (a[sortColumn] > b[sortColumn]) ? 1 : 0;
@@ -40,9 +46,24 @@ const Table = ({
       });
       setData(sortedData);
     }
-  }, [sortColumn, sortDescending]);
+  };
 
-  const onSortChangeHandler = (column) => {
+  const onRowsPerPageChange = () => {
+    setTotalPageNumber(Math.ceil(data.length/rowsPerPage));
+  };
+
+  const onPageChange = () => {
+    const pageRangeStart = (currentPage - 1) * rowsPerPage;
+    const pageRangeEnd = currentPage * rowsPerPage;
+    setDataOnCurrentPage(data.slice(pageRangeStart,pageRangeEnd));
+  }
+
+  useEffect(() => onResultChange(), [result]);
+  useEffect(() => onSortChange(), [sortColumn, sortDescending]);
+  useEffect(() => onRowsPerPageChange(), [data, rowsPerPage]);
+  useEffect(() => onPageChange(), [data, rowsPerPage, currentPage]);
+
+  const sortChangeHandler = (column) => {
     if (sortColumn === column) {
       setSortDescending(!sortDescending);
     } else {
@@ -51,19 +72,39 @@ const Table = ({
     }
   };
 
+  const selectorChangeHandler = (count) => {
+    setCurrentPage(1);
+    setRowsPerPage(count);
+  };
+
+  const paginatorChangeHandler = (page) => {
+    setCurrentPage(page);
+  };
+
   return (
-    <table className={s.table}>
-      <TableHead
-        columns={columns}
-        onClick={onSortChangeHandler}
-        sortColumn={sortColumn}
-        sortOrder={sortDescending ? 'sortDesc' : 'sortAsc'}
+    <>
+      <RowsPerPageSelector
+        rowsPerPage={rowsPerPage}
+        onSelectorChange={selectorChangeHandler}
       />
-      <TableBody
-        columnsNames={columns.map(el => el.name)}
-        data={data}
+      <table className={s.table}>
+        <TableHead
+          columns={columns}
+          onColumnClick={sortChangeHandler}
+          sortColumn={sortColumn}
+          sortOrder={sortDescending ? 'sortDesc' : 'sortAsc'}
+        />
+        <TableBody
+          columnsNames={columns.map(el => el.name)}
+          data={dataOnCurrentPage}
+        />
+      </table>
+      <Paginator
+        currentPage={currentPage}
+        totalPageNumber={totalPageNumber}
+        onPageChange={paginatorChangeHandler}
       />
-    </table>
+    </>
   );
 };
 

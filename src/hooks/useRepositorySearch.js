@@ -24,15 +24,11 @@ const requestQuery = async (items, q, page) => {
     },
   });
   const data = await response.json();
-
   if (!response.ok) {
-    console.log(response.ok)
     throw(data.errors || data);
   }
 
-
   items.push(...data.items);
-
   const itemsLeft = data.total_count - page * per_page;
   if (itemsLeft > 0 && page < requestsLimit) {
     const pag = await requestQuery(items, q, page + 1);
@@ -62,7 +58,6 @@ const useRepositorySearch = () => {
       requestQuery([], value, 1)
         .then(setResult)
         .catch((err) => {
-          console.log('err', err)
           setErrors(true)
         })
         .then(() => {
