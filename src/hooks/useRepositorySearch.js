@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const urlWithParamsBuilder = (baseURL, data) => {
   const searchParams = new URLSearchParams(data);
@@ -44,29 +44,42 @@ const useRepositorySearch = () => {
   const [result, setResult] = useState([]);
   const [errors, setErrors] = useState(false);
 
+  const requestHandler = (param) => {
+    setLoading(true);
+    setResult([]);
+    setErrors(false);
+    requestQuery([], param, 1)
+      .then(setResult)
+      .catch(() => {
+        setErrors(true)
+      })
+      .then(() => {
+        setLoading(false);
+        setQ(param);
+        setValue('');
+      })
+  };
+
+  useEffect(() => {
+    const searchParams = new URL(window.location).searchParams;
+    const qParam = searchParams.get('q');
+    if (qParam) {
+      setValue(qParam);
+      requestHandler(qParam);
+    };
+  }, []);
+
   const inputChangeHandler = (event) => {
     event.persist();
     const { target: { value } } = event;
     setValue(value);
-  }
+  };
 
   const buttonClickHandler = () => {
     if (value !== q) {
-      setLoading(true);
-      setResult([]);
-      setErrors(false);
-      requestQuery([], value, 1)
-        .then(setResult)
-        .catch((err) => {
-          setErrors(true)
-        })
-        .then(() => {
-          setLoading(false);
-          setQ(value);
-          setValue('');
-        })
+      requestHandler(value);
     };
-  }
+  };
 
   return {
     q,

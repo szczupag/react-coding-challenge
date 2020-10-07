@@ -16,6 +16,15 @@ const columns = [
   { name: 'createdAt', label: 'Created at' },
 ];
 
+const sortData = (data, sortBy, sortDesc) => {
+  const sortedData = [...data].sort((a, b) => {
+    const result = (a[sortBy] < b[sortBy]) ? -1 : (a[sortBy] > b[sortBy]) ? 1 : 0;
+    if (sortDesc) return result * -1;
+    return result;
+  });
+  return sortedData;
+};
+
 const useRepositoryResults = ({ q, result }) => {
   const [data, setData] = useState([]);
   const [sortColumn, setSortColumn] = useState();
@@ -25,19 +34,25 @@ const useRepositoryResults = ({ q, result }) => {
   const [totalPageNumber, setTotalPageNumber] = useState();
   const [dataOnCurrentPage, setDataOnCurrentPage] = useState([]);
 
-  const onResultChange = () => {
+  const onInit = () => {
     const reducedItems = reduceItems(result);
-    setData(reducedItems);
+    const searchParams = new URL(window.location).searchParams;
+    const sortByParam = searchParams.get('sortBy');
+    const sortTypeParam = searchParams.get('sortType');
+    if (sortByParam && sortTypeParam) {
+      setSortColumn(sortByParam);
+      setSortDescending(sortTypeParam === 'desc');
+      const sortedData = sortData(reducedItems, sortByParam, sortTypeParam === 'desc');
+      setData(sortedData);
+    } else {
+      setData(reducedItems);
+    }
   };
 
   const onSortChange = () => {
     if (sortColumn) {
-      const sortedData = [...data].sort((a, b) => {
-        const result = (a[sortColumn] < b[sortColumn]) ? -1 : (a[sortColumn] > b[sortColumn]) ? 1 : 0;
-        if (sortDescending) return result * -1;
-        return result;
-      });
-      setData(sortedData);
+        const sortedData = sortData(data, sortColumn, sortDescending);
+        setData(sortedData);
     }
   };
 
@@ -70,7 +85,7 @@ const useRepositoryResults = ({ q, result }) => {
     }
   };
 
-  useEffect(() => onResultChange(), [result]);
+  useEffect(() => onInit(), [result]);
   useEffect(() => onSortChange(), [sortColumn, sortDescending]);
   useEffect(() => onRowsPerPageChange(), [data, rowsPerPage]);
   useEffect(() => onPageChange(), [data, rowsPerPage, currentPage]);
