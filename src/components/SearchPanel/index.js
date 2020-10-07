@@ -14,7 +14,6 @@ const SearchPanel = () => {
     result,
     errors,
     inputChangeHandler,
-    buttonClickHandler,
   } = useRepositorySearch();
 
   const {
@@ -35,7 +34,6 @@ const SearchPanel = () => {
       <Input
         value={value}
         onChange={inputChangeHandler}
-        onClick={buttonClickHandler}
       />
       <State
         loading={loading}

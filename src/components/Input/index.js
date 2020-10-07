@@ -4,7 +4,6 @@ import s from './style.css';
 const Input = ({
   value,
   onChange,
-  onClick,
 }) => (
   <div className={s.wrapper}>
     <input
@@ -13,12 +12,6 @@ const Input = ({
       onChange={onChange}
       className={s.input}
     />
-    <button
-      type="button"
-      onClick={onClick}
-      disabled={!value}>
-        Search
-    </button>
   </div>
 );
 
