@@ -9,7 +9,7 @@ const urlWithParamsBuilder = (baseURL, data) => {
 
 const requestQuery = async (items, q, page) => {
   const per_page = 100;
-  const requestsLimit = 5;
+  const requestsLimit = 1;
   const requestParams = {
     q,
     page,
@@ -38,7 +38,7 @@ const requestQuery = async (items, q, page) => {
 };
 
 const useRepositorySearch = () => {
-  const [pervValue, setPrevValue] = useState('');
+  const [q, setQ] = useState('');
   const [value, setValue] = useState('');
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState([]);
@@ -51,7 +51,7 @@ const useRepositorySearch = () => {
   }
 
   const buttonClickHandler = () => {
-    if (value !== pervValue) {
+    if (value !== q) {
       setLoading(true);
       setResult([]);
       setErrors(false);
@@ -62,13 +62,14 @@ const useRepositorySearch = () => {
         })
         .then(() => {
           setLoading(false);
-          setPrevValue(value);
+          setQ(value);
           setValue('');
         })
     };
   }
 
   return {
+    q,
     value,
     loading,
     result,
