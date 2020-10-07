@@ -2,6 +2,7 @@ import React from 'react';
 import Input from '../Input';
 import useRepositorySearch from '../../hooks/useRepositorySearch';
 import State from '../State';
+import Table from '../Table';
 
 const SearchPanel = () => {
   const {
@@ -24,7 +25,7 @@ const SearchPanel = () => {
         loading={loading}
         errors={errors}
       />
-      {JSON.stringify(result)}
+      <Table result={result} />
     </div>
   )
 };

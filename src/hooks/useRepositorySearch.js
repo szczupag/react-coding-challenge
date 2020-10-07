@@ -1,14 +1,5 @@
 import { useState } from 'react';
 
-const reduceItems = (items) => {
-  return items.map(item => ({
-    name: item.full_name,
-    owner: item.owner.login,
-    stars: item.stargazers_count,
-    createdAt: item.created_at,
-  }));
-};
-
 const urlWithParamsBuilder = (baseURL, data) => {
   const searchParams = new URLSearchParams(data);
   const url = new URL(baseURL);
@@ -18,7 +9,7 @@ const urlWithParamsBuilder = (baseURL, data) => {
 
 const requestQuery = async (items, q, page) => {
   const per_page = 100;
-  const requestsLimit = 10;
+  const requestsLimit = 5;
   const requestParams = {
     q,
     page,
@@ -36,8 +27,8 @@ const requestQuery = async (items, q, page) => {
   if (data.errors) {
     throw(data.errors);
   }
-  const reducedItems = reduceItems(data.items);
-  items.push(...reducedItems);
+
+  items.push(...data.items);
 
   const itemsLeft = data.total_count - page * per_page;
   if (itemsLeft > 0 && page < requestsLimit) {
