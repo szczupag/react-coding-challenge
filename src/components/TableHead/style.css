@@ -1,0 +1,29 @@
+.tableHead {
+  th {
+    padding: 8px;
+    border: 1px solid #cfcfcf;
+  }
+}
+
+.sortIcon {
+  display: inline-block;
+  margin-left: 8px;
+  width: 0; 
+  height: 0; 
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 10px solid #cfcfcf;
+}
+
+.sortDesc {
+  .sortIcon {
+    border-top: 10px solid #3101f5;
+  }
+}
+
+.sortAsc {
+  .sortIcon {
+    border-top: 10px solid #3101f5;
+    transform: rotate(180deg);
+  }
+}

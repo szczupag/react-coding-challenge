@@ -1,13 +1,4 @@
-import { useState } from 'react';
-
-const reduceItems = (items) => {
-  return items.map(item => ({
-    name: item.full_name,
-    owner: item.owner.login,
-    stars: item.stargazers_count,
-    createdAt: item.created_at,
-  }));
-};
+import { useEffect, useState } from 'react';
 
 const urlWithParamsBuilder = (baseURL, data) => {
   const searchParams = new URLSearchParams(data);
@@ -18,7 +9,7 @@ const urlWithParamsBuilder = (baseURL, data) => {
 
 const requestQuery = async (items, q, page) => {
   const per_page = 100;
-  const requestsLimit = 10;
+  const requestsLimit = 1;
   const requestParams = {
     q,
     page,
@@ -33,12 +24,11 @@ const requestQuery = async (items, q, page) => {
     },
   });
   const data = await response.json();
-  if (data.errors) {
-    throw(data.errors);
+  if (!response.ok) {
+    throw(data.errors || data);
   }
-  const reducedItems = reduceItems(data.items);
-  items.push(...reducedItems);
 
+  items.push(...data.items);
   const itemsLeft = data.total_count - page * per_page;
   if (itemsLeft > 0 && page < requestsLimit) {
     const pag = await requestQuery(items, q, page + 1);
@@ -48,34 +38,51 @@ const requestQuery = async (items, q, page) => {
 };
 
 const useRepositorySearch = () => {
-  const [pervValue, setPrevValue] = useState('');
+  const [q, setQ] = useState('');
   const [value, setValue] = useState('');
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState([]);
-  const [errors, setErrors] = useState([]);
+  const [errors, setErrors] = useState(false);
+
+  const requestHandler = (param) => {
+    setLoading(true);
+    setResult([]);
+    setErrors(false);
+    requestQuery([], param, 1)
+      .then(setResult)
+      .catch(() => {
+        setErrors(true)
+      })
+      .then(() => {
+        setLoading(false);
+        setQ(param);
+        setValue('');
+      })
+  };
+
+  useEffect(() => {
+    const searchParams = new URL(window.location).searchParams;
+    const qParam = searchParams.get('q');
+    if (qParam) {
+      setValue(qParam);
+      requestHandler(qParam);
+    };
+  }, []);
 
   const inputChangeHandler = (event) => {
     event.persist();
     const { target: { value } } = event;
     setValue(value);
-  }
+  };
 
   const buttonClickHandler = () => {
-    if (value !== pervValue) {
-      setLoading(true);
-      setResult([]);
-      requestQuery([], value, 1)
-        .then(setResult)
-        .catch(setErrors)
-        .then(() => {
-          setLoading(false);
-          setPrevValue(value);
-          setValue('');
-        })
+    if (value !== q) {
+      requestHandler(value);
     };
-  }
+  };
 
   return {
+    q,
     value,
     loading,
     result,
