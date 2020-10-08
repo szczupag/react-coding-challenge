@@ -69,16 +69,17 @@ const useRepositorySearch = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (value && value !== q) requestHandler(value);
+    }, 2000);
+    return () => clearTimeout(timeout)
+  }, [value]);
+
   const inputChangeHandler = (event) => {
     event.persist();
     const { target: { value } } = event;
     setValue(value);
-  };
-
-  const buttonClickHandler = () => {
-    if (value !== q) {
-      requestHandler(value);
-    };
   };
 
   return {
@@ -88,7 +89,6 @@ const useRepositorySearch = () => {
     result,
     errors,
     inputChangeHandler,
-    buttonClickHandler,
   }
 };
 

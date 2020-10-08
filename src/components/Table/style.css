@@ -1,4 +1,14 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px;
+  box-shadow: 0 5px 20px rgba(0,0,0,.16);
+  border-radius: 6px;
+  background-color: #fff;
+}
+
 .table {
-  border: 1px solid black;
+  border: 1px solid rgb(157, 169, 176);
   border-collapse: collapse;
 }

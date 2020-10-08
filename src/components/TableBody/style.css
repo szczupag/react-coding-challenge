@@ -1,7 +1,7 @@
 .tableBody {
   td {
     padding: 8px;
-    border: 1px solid #cfcfcf;
+    border: 1px solid rgb(157, 169, 176);
   }
   td:nth-of-type(3) {
     text-align: right;

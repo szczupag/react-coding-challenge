@@ -22,18 +22,20 @@ const Table = ({
         rowsPerPage={rowsPerPage}
         onSelectorChange={onSelectorChange}
       />
-      <table className={s.table}>
-        <TableHead
-          columns={columns}
-          onColumnClick={onColumnClick}
-          sortColumn={sortColumn}
-          sortOrder={sortOrder}
-        />
-        <TableBody
-          columnsNames={columns.map(el => el.name)}
-          data={dataOnCurrentPage}
-        />
-      </table>
+      <div className={s.wrapper}>
+        <table className={s.table}>
+          <TableHead
+            columns={columns}
+            onColumnClick={onColumnClick}
+            sortColumn={sortColumn}
+            sortOrder={sortOrder}
+          />
+          <TableBody
+            columnsNames={columns.map(el => el.name)}
+            data={dataOnCurrentPage}
+          />
+        </table>
+      </div>
       <Paginator
         currentPage={currentPage}
         totalPageNumber={totalPageNumber}
