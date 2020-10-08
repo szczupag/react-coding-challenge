@@ -6,6 +6,8 @@ See requirements description [here](https://gist.github.com/wpasinski/927ef71e70
 ## Tech stack
 React.js supported by webpack and babel.
 
+Node version `v14.11.0`
+
 ## Running locally with node
 Clone repository
 ```
