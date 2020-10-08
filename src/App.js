@@ -5,7 +5,8 @@ import s from './App.css';
 const App = () => {
   return (
     <div className={s.wrapper}>
-      <h1>Github Repository Search</h1>
+      <h1 className={s.title}>Github Repository Search</h1>
+      <span className={s.subtitle}>Type something and wait to see the result!</span>
       <SearchPanel />
     </div>
   );

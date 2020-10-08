@@ -5,6 +5,12 @@
   background-color: transparent;
 }
 
+@media(min-width: 768px) {
+  .input {
+    width: 420px;
+  }
+}
+
 .wrapper {
-  margin-bottom: 32px;
+  margin-bottom: 56px;
 }
