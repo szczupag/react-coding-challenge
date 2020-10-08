@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 
+const rowsPerPageOptions = [10, 50, 100];
+
 const reduceItems = (items) => {
   return items.map(item => ({
     name: item.full_name,
@@ -120,6 +122,7 @@ const useRepositoryResults = ({ q, result }) => {
     selectorChangeHandler,
     sortChangeHandler,
     paginatorChangeHandler,
+    rowsPerPageOptions,
   }
 };
 

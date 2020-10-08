@@ -16,9 +16,11 @@ const Table = ({
   onSelectorChange,
   onColumnClick,
   onPageChange,
+  rowsPerPageOptions,
 }) => (
     <>
       <RowsPerPageSelector
+        options={rowsPerPageOptions}
         rowsPerPage={rowsPerPage}
         onSelectorChange={onSelectorChange}
       />

@@ -42,7 +42,7 @@ describe('When indicator is clicked', () => {
         <Paginator
           currentPage={currentPage}
           totalPageNumber={pages.length}
-          onPageChange={(page) => setCurrentPage(page)}
+          onPageChange={setCurrentPage}
         />
       );
     }
