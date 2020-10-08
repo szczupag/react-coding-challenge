@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 
+const rowsPerPageOptions = [10, 50, 100];
+
 const reduceItems = (items) => {
   return items.map(item => ({
     name: item.full_name,
@@ -34,7 +36,8 @@ const useRepositoryResults = ({ q, result }) => {
   const [totalPageNumber, setTotalPageNumber] = useState();
   const [dataOnCurrentPage, setDataOnCurrentPage] = useState([]);
 
-  const onInit = () => {
+  const onResultChange = () => {
+    setCurrentPage(1);
     const reducedItems = reduceItems(result);
     const searchParams = new URL(window.location).searchParams;
     const sortByParam = searchParams.get('sortBy');
@@ -85,7 +88,7 @@ const useRepositoryResults = ({ q, result }) => {
     }
   };
 
-  useEffect(() => onInit(), [result]);
+  useEffect(() => onResultChange(), [result]);
   useEffect(() => onSortChange(), [sortColumn, sortDescending]);
   useEffect(() => onRowsPerPageChange(), [data, rowsPerPage]);
   useEffect(() => onPageChange(), [data, rowsPerPage, currentPage]);
@@ -120,6 +123,7 @@ const useRepositoryResults = ({ q, result }) => {
     selectorChangeHandler,
     sortChangeHandler,
     paginatorChangeHandler,
+    rowsPerPageOptions,
   }
 };
 

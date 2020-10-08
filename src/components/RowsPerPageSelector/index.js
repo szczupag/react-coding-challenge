@@ -1,9 +1,8 @@
 import React from 'react';
 import s from './style.css';
 
-const options = [10, 50, 100];
-
 const Selector = ({
+  options,
   rowsPerPage,
   onSelectorChange,
 }) => (

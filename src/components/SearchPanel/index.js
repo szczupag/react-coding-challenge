@@ -27,6 +27,7 @@ const SearchPanel = () => {
     selectorChangeHandler,
     sortChangeHandler,
     paginatorChangeHandler,
+    rowsPerPageOptions,
   } = useRepositoryResults({ q, result });
 
   return (
@@ -40,6 +41,7 @@ const SearchPanel = () => {
         errors={errors}
         render={() => (
           <Table
+            rowsPerPageOptions={rowsPerPageOptions}
             columns={columns}
             dataOnCurrentPage={dataOnCurrentPage}
             rowsPerPage={rowsPerPage}
