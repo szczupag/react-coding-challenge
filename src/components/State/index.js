@@ -5,11 +5,11 @@ import ErrorMessage from '../ErrorMessage';
 const State = ({
   loading,
   errors,
-  render
+  render,
 }) => (
   <>
     {loading && <LoadingSpinner />}
-    {errors && <ErrorMessage />}
+    {errors && <ErrorMessage message={"Couldn't get results. Please, try again later."} />}
     {!loading && !errors && render()}
   </>
 );
