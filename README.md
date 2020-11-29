@@ -1,7 +1,4 @@
 # React coding challenge
-My front-end recruitment task solution for Tonik.
-
-See requirements description [here](https://gist.github.com/wpasinski/927ef71e7036fdb2e1b4bb24a87ac87e).
 
 ## Demo
 https://szczupag.github.io/react-coding-challenge/
